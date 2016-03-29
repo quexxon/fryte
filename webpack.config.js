@@ -35,4 +35,8 @@ module.exports = {
       },
     }),
   ],
+  devServer: {
+    contentBase: './example',
+    inline: true,
+  },
 };
