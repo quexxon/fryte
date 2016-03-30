@@ -1,7 +1,8 @@
 # Fast, Responsive YouTube Embeds
 
 Fryte speeds up YouTube embeds by loading only video thumbnails
-initially, and lazy-loading videos on demand.
+initially, and lazy-loading videos on demand. The only dependency is
+jQuery.
 
 ## Get Started
 
