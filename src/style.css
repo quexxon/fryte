@@ -18,15 +18,13 @@
 
 .fryte-thumb {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: block;
+  top: 50%;
+  left: 50%;
   margin: auto;
   width: 100%;
   max-width: 100%;
-  height: auto
+  height: auto;
+  transform: translate(-50%, -50%);
 }
 
 .fryte-play-button {
