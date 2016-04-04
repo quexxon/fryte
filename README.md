@@ -14,14 +14,14 @@ only need the JS file; the CSS and SVG play icon are inlined.
 To embed a video, find the video's YouTube id and add the following
 markup to your project:
 
-```
+```html
 <div class="fryte" data-id="YOUTUBE_ID"></div>
 ```
 
 Call the following function on any page with videos to get the process
 rolling:
 
-```
+```javascript
 Fryte();
 ```
 
@@ -30,7 +30,7 @@ embedded video. This object is converted into query parameters on the
 embed URI. See [Google's YouTube documentation][0] for all possible
 parameters. Example:
 
-```
+```javascript
 Fryte({
   fs: 0,
   controls: 2,
