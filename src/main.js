@@ -2,26 +2,6 @@
 
 require('./style.css');
 
-// Polyfill Element.prototype.closest and Element.prototype.matches
-// Adapted from https://github.com/jonathantneal/closest
-(ELEMENT => {
-  ELEMENT.matches = ELEMENT.matches || ELEMENT.mozMatchesSelector || ELEMENT.msMatchesSelector || ELEMENT.oMatchesSelector || ELEMENT.webkitMatchesSelector;
-
-  ELEMENT.closest = ELEMENT.closest || function closest (selector) {
-    let element = this;
-
-    while (element) {
-      if (element.matches(selector)) {
-	break;
-      }
-
-      element = element.parentElement;
-    }
-
-    return element;
-  };
-})(Element.prototype);
-
 
 const objectToQueryString = (obj) => {
   let pairs = Object.keys(obj).map(k => {
@@ -82,6 +62,29 @@ const init = () => {
   });
 };
 
+
+// Polyfill Element.prototype.closest and Element.prototype.matches
+// Lightly adapted from https://github.com/jonathantneal/closest
+(ELEMENT => {
+  ELEMENT.matches = ELEMENT.matches || ELEMENT.mozMatchesSelector || ELEMENT.msMatchesSelector || ELEMENT.oMatchesSelector || ELEMENT.webkitMatchesSelector;
+
+  ELEMENT.closest = ELEMENT.closest || function closest (selector) {
+    let el = this;
+
+    while (el) {
+      if (el.matches(selector)) {
+	break;
+      }
+
+      el = el.parentElement;
+    }
+
+    return el;
+  };
+})(Element.prototype);
+
+
+// Get things started once DOM is ready
 (fn => {
   if (document.readyState != 'loading'){
     fn();
