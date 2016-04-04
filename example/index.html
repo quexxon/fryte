@@ -13,5 +13,19 @@
       <div class="fryte" data-id="f1XrTzVzbJY"></div>
     </div>
     <script src="/assets/fryte.min.js"></script>
+    <script>
+      // Get things started once DOM is ready
+      function init() {
+        Fryte();
+      }
+      
+      (fn => {
+        if (document.readyState != 'loading'){
+          fn();
+        } else {
+          document.addEventListener('DOMContentLoaded', fn);
+        }
+      })(init);
+    </script>
   </body>
 </html>
