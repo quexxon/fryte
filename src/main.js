@@ -20,30 +20,33 @@ const createYouTubeThumb = (id) => {
 };
 
 
-const createYouTubeIFrame = (e) => {
-  let iframe = document.createElement('iframe'),
-      player = e.target.closest('.fryte'),
-      options = {
-        autoplay: 1,
-        autohide: 2,
-        enablejsapi: 0,
-        color: 'white',
-        controls: 2,
-        showinfo: 0,
-      },
-      url = `https://www.youtube.com/embed/${player.dataset.id}?${objectToQueryString(options)}`;
+const createYouTubeIFrame = (options) => {
+  return (e) => {
+    let iframe = document.createElement('iframe'),
+        player = e.target.closest('.fryte'),
+        url = `https://www.youtube.com/embed/${player.dataset.id}?${objectToQueryString(options)}`;
 
-  iframe.classList.add('fryte-iframe');
-  iframe.setAttribute('src', url);
-  iframe.setAttribute('frameborder', "0");
-  iframe.setAttribute('allowfullscreen', true);
-  
-  player.innerHTML = iframe.outerHTML;
+    iframe.classList.add('fryte-iframe');
+    iframe.setAttribute('src', url);
+    iframe.setAttribute('frameborder', "0");
+    iframe.setAttribute('allowfullscreen', true);
+    
+    player.innerHTML = iframe.outerHTML;
+  }
 };
 
 
-const init = () => {
+const init = (options = false) => {
   let els = document.querySelectorAll('.fryte');
+
+  options = options || {
+    autoplay: 1,
+    autohide: 2,
+    enablejsapi: 0,
+    color: 'white',
+    controls: 2,
+    showinfo: 0,
+  };
   
   Array.prototype.forEach.call(els, (el) => {
     let dummy = document.createElement('div');
@@ -57,7 +60,7 @@ const init = () => {
     let target = e.target.closest('.fryte > div');
     
     if (target) {
-      createYouTubeIFrame(e);
+      createYouTubeIFrame(options)(e);
     }
   });
 };
@@ -84,11 +87,4 @@ const init = () => {
 })(Element.prototype);
 
 
-// Get things started once DOM is ready
-(fn => {
-  if (document.readyState != 'loading'){
-    fn();
-  } else {
-    document.addEventListener('DOMContentLoaded', fn);
-  }
-})(init)
+self.Fryte = init;
