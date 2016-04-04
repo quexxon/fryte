@@ -27,7 +27,7 @@ Fryte();
 
 It's also possible to pass an object to `Fryte` to customize the
 embedded video. This object is converted into query parameters on the
-embed URI. See [the Google's YouTube documentation][0] for all possible
+embed URI. See [Google's YouTube documentation][0] for all possible
 parameters. Example:
 
 ```
@@ -49,4 +49,4 @@ change it directly. If you'd like to change the play icon to match your
 site's branding, you can replace `src/play-button.svg` with your own SVG
 and rebuild the project.
 
-[0]: (https://developers.google.com/youtube/player_parameters)
+[0]: https://developers.google.com/youtube/player_parameters
