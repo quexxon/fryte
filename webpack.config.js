@@ -15,6 +15,10 @@ module.exports = {
         loader: "style!css",
       },
       {
+        test: /\.svg$/,
+        loader: 'svg-inline',
+      },
+      {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel',

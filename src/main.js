@@ -14,7 +14,7 @@ const objectToQueryString = (obj) => {
 
 const createYouTubeThumb = (id) => {
   let url = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
-      playButton = '<svg class="fryte-play-button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" height="60" width="60"><circle r="30" cy="30" cx="30" opacity=".75"/><circle r="26" cy="30" cx="30" fill="none" stroke="#fff" stroke-width="2"/><path fill="#fff" d="M24 20l18 10-18 10z"/></svg>';
+      playButton = require('./play-button.svg');
   
   return `<img class="fryte-thumb" src="${url}">${playButton}`;
 };
