@@ -1,43 +1,39 @@
-'use strict';
+'use strict'
 
-require('./style.css');
+require('./style.css')
 
+function objectToQueryString (obj) {
+  const pairs = Object.keys(obj).map(k =>
+    `${encodeURIComponent(k)}=${encodeURIComponent(obj[k])}`
+  )
 
-const objectToQueryString = (obj) => {
-  let pairs = Object.keys(obj).map(k => {
-    return `${encodeURIComponent(k)}=${encodeURIComponent(obj[k])}`;
-  });
+  return pairs.join('&')
+}
 
-  return pairs.join("&");
-};
+function createYouTubeThumb (id) {
+  const url = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
+  const playButton = require('./play-button.svg')
 
+  return `<img class="fryte-thumb" src="${url}">${playButton}`
+}
 
-const createYouTubeThumb = (id) => {
-  let url = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
-      playButton = require('./play-button.svg');
-  
-  return `<img class="fryte-thumb" src="${url}">${playButton}`;
-};
-
-
-const createYouTubeIFrame = (options) => {
+function createYouTubeIFrame (options) {
   return (e) => {
-    let iframe = document.createElement('iframe'),
-        player = e.target.closest('.fryte'),
-        url = `https://www.youtube.com/embed/${player.dataset.id}?${objectToQueryString(options)}`;
+    const iframe = document.createElement('iframe')
+    const player = e.target.closest('.fryte')
+    const url = `https://www.youtube.com/embed/${player.dataset.id}?${objectToQueryString(options)}`
 
-    iframe.classList.add('fryte-iframe');
-    iframe.setAttribute('src', url);
-    iframe.setAttribute('frameborder', "0");
-    iframe.setAttribute('allowfullscreen', true);
-    
-    player.innerHTML = iframe.outerHTML;
+    iframe.classList.add('fryte-iframe')
+    iframe.setAttribute('src', url)
+    iframe.setAttribute('frameborder', '0')
+    iframe.setAttribute('allowfullscreen', true)
+
+    player.innerHTML = iframe.outerHTML
   }
-};
+}
 
-
-const init = (options = false) => {
-  let els = document.querySelectorAll('.fryte');
+function init (options = false) {
+  const els = document.querySelectorAll('.fryte')
 
   options = options || {
     autoplay: 1,
@@ -45,46 +41,48 @@ const init = (options = false) => {
     enablejsapi: 0,
     color: 'white',
     controls: 2,
-    showinfo: 0,
-  };
-  
-  Array.prototype.forEach.call(els, (el) => {
-    let dummy = document.createElement('div');
+    showinfo: 0
+  }
 
-    dummy.innerHTML = createYouTubeThumb(el.dataset.id);
-    el.appendChild(dummy);
-    el.outerHTML = `<div class="fryte-wrapper">${el.outerHTML}</div>`;
-  });
+  Array.prototype.forEach.call(els, (el) => {
+    const dummy = document.createElement('div')
+
+    dummy.innerHTML = createYouTubeThumb(el.dataset.id)
+    el.appendChild(dummy)
+    el.outerHTML = `<div class="fryte-wrapper">${el.outerHTML}</div>`
+  })
 
   document.querySelector('body').addEventListener('click', e => {
-    let target = e.target.closest('.fryte > div');
-    
-    if (target) {
-      createYouTubeIFrame(options)(e);
-    }
-  });
-};
+    const target = e.target.closest('.fryte > div')
 
+    if (target) {
+      createYouTubeIFrame(options)(e)
+    }
+  })
+}
 
 // Polyfill Element.prototype.closest and Element.prototype.matches
 // Lightly adapted from https://github.com/jonathantneal/closest
-(ELEMENT => {
-  ELEMENT.matches = ELEMENT.matches || ELEMENT.mozMatchesSelector || ELEMENT.msMatchesSelector || ELEMENT.oMatchesSelector || ELEMENT.webkitMatchesSelector;
+((elt) => {
+  elt.matches = elt.matches ||
+    elt.mozMatchesSelector ||
+    elt.msMatchesSelector ||
+    elt.oMatchesSelector ||
+    elt.webkitMatchesSelector
 
-  ELEMENT.closest = ELEMENT.closest || function closest (selector) {
-    let el = this;
+  elt.closest = elt.closest || function closest (selector) {
+    let el = this
 
     while (el) {
       if (el.matches(selector)) {
-	break;
+        break
       }
 
-      el = el.parentElement;
+      el = el.parentElement
     }
 
-    return el;
-  };
-})(Element.prototype);
+    return el
+  }
+})(window.Element.prototype)
 
-
-self.Fryte = init;
+window.Fryte = init
